@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.header`
-    background: #141419;
+    background: var(--header);
     width: 100%;
 `;
 
@@ -13,20 +13,20 @@ export const Content = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+`;
 
-    button {
-        font-size: 1rem;
-        color: #FFF;
-        background: #000;
-        border: 0;
-        padding: 0 2rem;
-        border-radius: 0.25rem;
-        height: 3rem;
+export const ButtonBox = styled.button`
+    font-size: 1rem;
+    color: var(--white);
+    background: var(--black);
+    border: 0.15rem solid ${(props) => props.isActive ? '#030b6f' : '#000'};
+    padding: 0 2rem;
+    border-radius: 0.25rem;
+    height: 3rem;
 
-        transition: filter 0.2s;
+    transition: filter 0.2s;
 
-        &:hover {
-            filter: brightness(0.7);
-        }
+    &:hover {
+        filter: brightness(0.7);
     }
 `;

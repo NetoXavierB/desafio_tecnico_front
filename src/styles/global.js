@@ -1,13 +1,15 @@
 import styled, { createGlobalStyle } from 'styled-components';
 
 export const Container = styled.main`
-    height: 100vh;
-    background: #000;
+    background: var(--black);
 `;
 
 export const GlobalStyle = createGlobalStyle`
     :root {
-        --background: #191920;
+        --black: #000;
+        --white: #FFF;
+        --blue: #030b6f;
+        --header: #141419;
     }
 
     * {
@@ -18,7 +20,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     body {
-        background: var(---background);
+        background: var(--black);
         -webkit-font-smoothing: antialiased;
     }
 

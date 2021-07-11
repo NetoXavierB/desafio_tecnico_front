@@ -1,23 +1,61 @@
-import { List, Avatar, Button, Skeleton, Typography } from 'antd';
+import { useState, useEffect } from "react";
+import moment from 'moment';
 
-import { Container } from "./styles";
+import { 
+    Container,
+    ContainerItem,
+    ItemImage,
+    ItemInfo,
+    ContainerFilter,
+    ImageBox
+} from "./styles";
+
+import icon from '../../assets/rocket.svg';
 
 
 export function Home({ list }) {
+    const [data, setData] = useState([])
+    const [search, setSearch] = useState('');
+
+    useEffect(() => {
+        setData(list);
+    }, [list]);
+    
+    const SearchLaunch = () => {
+        const searchLowerCase = search.toLowerCase();
+        const resultFilter = list.filter(launch => launch.name.toLowerCase().includes(searchLowerCase));
+        if(resultFilter.length === 0) {
+            console.log("swal");
+            setData(list);
+            return;
+        }
+        setData(resultFilter);
+    }
+
+    const ClearSearch = () => {
+        setSearch('');
+        setData(list);
+    }
 
     return (
         <Container>
-            {console.log(list)}
-            <List
-                bordered
-                dataSource={list}
-                renderItem={item => (
-                    console.log(item.name),
-                    <List.Item>
-                        {/* <h1>{item.name}</h1> */}
-                    </List.Item>
-                )}
-            />
+            <ContainerFilter>
+                <input placeholder="Digite o nome do lançamento" onChange={(e) => {setSearch(e.target.value);}}/>
+                <button type="button" onClick={SearchLaunch}>Buscar</button>
+            </ContainerFilter>
+            {data.map(item => {
+                return (
+                    <ContainerItem key={item.id}>
+                        <ItemInfo>
+                            <h1>{item.name} - {moment(item.date_utc).format("DD/MM/YYYY")}</h1>
+                            <p>{item.details ? item.details : "Não possui detalhes."}</p>
+                        </ItemInfo>
+                        <ItemImage>
+                            {item.links.patch.small !== null ? <ImageBox src={item.links.patch.small} alt="Rocket"/> : <ImageBox src={icon} alt="Rocket" rocket={true}/> }
+                        </ItemImage>
+                    </ContainerItem>
+                );
+            })}
         </Container>
     )
 }

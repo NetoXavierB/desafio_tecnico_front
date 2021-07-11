@@ -8,18 +8,29 @@ import { GlobalStyle, Container } from './styles/global';
 
 
 export function App() {
-  const[launch, setLaunch] = useState([]);
+  const [launch, setLaunch] = useState([]);
+  const [buttonActive, setButtonActive] = useState('upcoming');
+
+  const CreateSetLaunch = ({ data }) => {
+    if(data.length === undefined) {
+      const array = [];
+      array.push(data);
+      setLaunch(array);
+      return;
+    }
+    setLaunch(data);
+  }
     
   useEffect(() =>{
-      api.get('upcoming')
-          .then(response => {
-              setLaunch(response.data);
-          });
-  },[]);
+    api.get(buttonActive)
+        .then(response => {
+            CreateSetLaunch(response);
+        });
+  },[buttonActive]);
 
   return (
     <Container>
-      <Header />
+      <Header buttonActive={buttonActive} setButtonActive={setButtonActive}/>
       <Home list={launch} />
       <GlobalStyle />
     </Container>
