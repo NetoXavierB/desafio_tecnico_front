@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
 
-function App() {
+import { api } from "./services/api";
+import { Header } from "./components/Header";
+import { Home } from "./pages/Home";
+
+import { GlobalStyle, Container } from './styles/global';
+
+
+export function App() {
+  const[launch, setLaunch] = useState([]);
+    
+  useEffect(() =>{
+      api.get('upcoming')
+          .then(response => {
+              setLaunch(response.data);
+          });
+  },[]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Header />
+      <Home list={launch} />
+      <GlobalStyle />
+    </Container>
   );
 }
-
-export default App;
