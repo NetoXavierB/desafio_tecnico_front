@@ -24,11 +24,6 @@ export function Home({ list }) {
     const SearchLaunch = () => {
         const searchLowerCase = search.toLowerCase();
         const resultFilter = list.filter(launch => launch.name.toLowerCase().includes(searchLowerCase));
-        if(resultFilter.length === 0) {
-            console.log("swal");
-            setData(list);
-            return;
-        }
         setData(resultFilter);
     }
 

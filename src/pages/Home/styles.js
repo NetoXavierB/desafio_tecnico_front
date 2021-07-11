@@ -70,5 +70,11 @@ export const ContainerFilter = styled.div`
         font-weight: bold;
         background: var(--blue);
         color: var(--white);
+
+        transition: filter 0.2s;
+
+        &:hover {
+            filter: brightness(0.7);
+        }
     }
 `;
