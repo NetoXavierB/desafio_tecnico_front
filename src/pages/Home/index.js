@@ -27,26 +27,37 @@ export function Home({ list }) {
         setData(resultFilter);
     }
 
-    const ClearSearch = () => {
-        setSearch('');
-        setData(list);
-    }
+    // const ClearSearch = () => {
+    //     setSearch('');
+    //     setData(list);
+    // }
 
     return (
         <Container>
             <ContainerFilter>
-                <input placeholder="Digite o nome do lançamento" onChange={(e) => {setSearch(e.target.value);}}/>
-                <button type="button" onClick={SearchLaunch}>Buscar</button>
+                <input
+                    data-testid="input-search"
+                    placeholder="Digite o nome do lançamento" 
+                    onChange={(e) => {setSearch(e.target.value);}}
+                />
+                <button 
+                    data-testid="button-search"
+                    type="button" 
+                    onClick={SearchLaunch}
+                >Buscar</button>
             </ContainerFilter>
-            {data.map(item => {
+            {data.map((item, index) => {
                 return (
-                    <ContainerItem key={item.id}>
+                    <ContainerItem 
+                        key={index}
+                        data-testid={item.name}
+                    >
                         <ItemInfo>
                             <h1>{item.name} - {moment(item.date_utc).format("DD/MM/YYYY")}</h1>
                             <p>{item.details ? item.details : "Não possui detalhes."}</p>
                         </ItemInfo>
                         <ItemImage>
-                            {item.links.patch.small !== null ? <ImageBox src={item.links.patch.small} alt="Rocket"/> : <ImageBox src={icon} alt="Rocket" rocket={true}/> }
+                            {item.links && item.links.patch.small !== null ? <ImageBox src={item.links.patch.small} alt="Rocket"/> : <ImageBox src={icon} alt="Rocket" rocket={true}/> }
                         </ItemImage>
                     </ContainerItem>
                 );
